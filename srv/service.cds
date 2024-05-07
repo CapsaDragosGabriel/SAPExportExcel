@@ -5,8 +5,14 @@ service TableExport
 {
     @odata.draft.enabled
     entity SrvProjection as
-        projection on my.Creation;
+        projection on my.Creation
+        actions{
+            action priorityDelivery(priority:Integer);
+
+        };
+
 }
+
 
 annotate TableExport with @requires :
 [

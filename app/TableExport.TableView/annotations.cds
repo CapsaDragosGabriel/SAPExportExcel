@@ -5,17 +5,17 @@ annotate service.SrvProjection with @(
         Data : [
             {
                 $Type : 'UI.DataField',
-                Label : 'Category',
+                Label : '{i18n>Category}',
                 Value : Category,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Priority',
+                Label : '{i18n>Priority}',
                 Value : Priority,
             },
             {
                 $Type : 'UI.DataField',
-                Label : 'Department',
+                Label : '{i18n>Department}',
                 Value : Department,
             },
             {
@@ -43,25 +43,32 @@ annotate service.SrvProjection with @(
             Target : '@UI.FieldGroup#GeneratedGroup',
         },
     ],
+    UI.Identification:[
+         {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'TableExport.priorityDelivery',
+            Label : '{i18n>changePriority}',
+        },
+    ],
     UI.LineItem : [
         {
             $Type : 'UI.DataField',
-            Label : 'Category',
+            Label : '{i18n>Category}',
             Value : Category,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Priority',
+            Label : '{i18n>Priority}',
             Value : Priority,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'Department',
+            Label : '{i18n>Department}',
             Value : Department,
         },
         {
             $Type : 'UI.DataField',
-            Label : 'ProductName',
+            Label : '{i18n>Productname}',
             Value : ProductName,
         },
         {
