@@ -129,6 +129,19 @@
                     "route": "SrvProjectionObjectPage"
                   }
                 }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "Export": {
+                      "press": "TableExport.TableView.ext.controller.ExportHandler.ExportMethod",
+                      "visible": true,
+                      "enabled": true,
+                      "requiresSelection": false,
+                      "text": "ExportAction"
+                    }
+                  }
+                }
               }
             }
           },

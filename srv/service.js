@@ -15,6 +15,14 @@ class TableExport extends LCAPApplicationService {
             return await priorityDelivery(req,this);
         });
 
+        this.on('Export', async (req) => {
+
+            console.log("EXPORT ACTION ENTERED");
+            return "smallstring";
+           // return await priorityDelivery(req,this);
+        });
+
+
         this.on('READ','SrvProjection', async (req,next) => {
       
             console.log("Req: "+req);
