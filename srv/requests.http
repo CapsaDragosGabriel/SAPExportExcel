@@ -1,2 +1,5 @@
+@me = Authorization: Basic root:root
+
 ##Get Creations
-GET https://localhost:4004/service/TableExport/ 
+GET http://localhost:4004/services/TableExport/
+{{me}}

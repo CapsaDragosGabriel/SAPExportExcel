@@ -1,5 +1,5 @@
 {
-  "version": "1.27.0",
+  "version": "2.0.0",
   "tasks": [
     {
       "label": "npm-install",
@@ -56,6 +56,40 @@
       "label": "Enable Discovery and Deploy TableExport",
       "taskType": "Deploy",
       "enableDiscovery": "true"
+    },
+    {
+      "label": "dev-project",
+      "type": "process",
+      "command": "npx",
+      "args": [
+        "dev-cap-tools",
+        "gen-entrypoint"
+      ],
+      "dependsOn": [
+        "BuildMDK"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "PreLaunchTask for Run SAPExportExcel-3",
+      "type": "process",
+      "command": "npx",
+      "args": [
+        "dev-cap-tools",
+        "gen-entrypoint",
+        "--ui5version",
+        "1.123.2",
+        "--ui5theme",
+        "sap_fiori_3"
+      ],
+      "dependsOn": [
+        "BuildMDK"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     }
   ]
 }
