@@ -132,6 +132,9 @@
               },
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "enableExport":false
+                    },
                   "actions": {
                     "Export": {
                       "press": "TableExport.TableView.ext.controller.ExportHandler.ExportMethod",

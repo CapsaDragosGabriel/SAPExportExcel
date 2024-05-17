@@ -4,9 +4,12 @@
  */
 const LCAPApplicationService = require('@sap/low-code-event-handler');
 const priorityDelivery = require('./code/priorityDelivery');
+const cds = require('@sap/cds');
+const { Readable } = require('stream');
 
 class TableExport extends LCAPApplicationService {
     async init() {
+        const {Products}= this.entities;
 
         this.on('priorityDelivery','SrvProjection', async (req) => {
 
@@ -18,7 +21,15 @@ class TableExport extends LCAPApplicationService {
         this.on('Export', async (req) => {
 
             console.log("EXPORT ACTION ENTERED");
-            return "smallstring";
+            console.log(Products)
+            const products = await this.get('SrvProjection');
+            return products;
+            
+            /*const csvHeaders = 'ID;Category;Priority;Department;ProductName;DeliveryDate;Cost\n';
+            const csvRows = await products.map(p => `${p.ID};${p.Category};${p.Priority};${p.Department};${p.ProductName};${p.DeliveryDate};${p.Cost}`).join('\n')
+            const csvContent=csvHeaders+csvRows;
+            console.log("CSV CONTENT");
+            console.log(csvContent);*/
            // return await priorityDelivery(req,this);
         });
 
@@ -26,6 +37,7 @@ class TableExport extends LCAPApplicationService {
         this.on('READ','SrvProjection', async (req,next) => {
       
             console.log("Req: "+req);
+            console.log("line 40")
             console.log(req);
             console.log('READ event triggered');
             // Custom logic for READ operation
