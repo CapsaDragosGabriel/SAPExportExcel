@@ -8,7 +8,6 @@ sap.ui.define([
 ], function(MessageToast,Controller,MockServer,exportLibrary,Spreadsheet,ODataModel) {
     'use strict';
 
-
     var EdmType = exportLibrary.EdmType;
 
     return {
@@ -79,9 +78,10 @@ sap.ui.define([
                     data:
                     {},
                     contentType: 'application/json',
+					responseType:'arrayBuffer',
                     success: async function(data) {
                         console.log('Data from backend:', data);
-						excelBuilder(data);
+						f2(data.value);
                     },
                     error: function(error) {
                         console.error('Error fetching data:', error);
@@ -99,12 +99,64 @@ sap.ui.define([
            
 		
     };
+	async function f2(data){
+		const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+		// Create a link element to trigger the download
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'Products.xlsx';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+	}
 	async function excelBuilder(data){
-		console.log(data);
-		const mParameters={
-			workbook:{
-				
-			}
-		}
+
+		const url = window.URL.createObjectURL(data);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'Products.xlsx';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+		// Convert JSON to worksheet
+	
 	} 
+	async function excelFileReader(data){
+		 // Create a Blob from the array buffer
+		 const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+		 // Create a link element to trigger the download
+		 const url = window.URL.createObjectURL(blob);
+		 const a = document.createElement('a');
+		 a.href = url;
+		 a.download = 'Products.xlsx';
+		 document.body.appendChild(a);
+		 a.click();
+		 document.body.removeChild(a);
+		 window.URL.revokeObjectURL(url);
+	}
+	async function exporter(response){
+		const byteCharacters = response.value;
+		
+		const byteNumbers = new Array(byteCharacters.length);
+		for (let i = 0; i < byteCharacters.length; i++) {
+			byteNumbers[i] = byteCharacters.charCodeAt(i);
+		}
+		const byteArray = new Uint8Array(byteNumbers);
+		const blob = new Blob([byteArray], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+		// Create a link element to trigger the download
+		const url = window.URL.createObjectURL(blob);
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'Products.xlsx';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		window.URL.revokeObjectURL(url);
+	}
 });

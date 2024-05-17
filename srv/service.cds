@@ -10,7 +10,7 @@ service TableExport
             action priorityDelivery(priority:Integer);
 
         };
-    action Export() returns array of String;
+    action Export() returns Binary;
 }
 
 

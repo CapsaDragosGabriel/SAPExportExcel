@@ -6,6 +6,7 @@ const LCAPApplicationService = require('@sap/low-code-event-handler');
 const priorityDelivery = require('./code/priorityDelivery');
 const cds = require('@sap/cds');
 const { Readable } = require('stream');
+const XLSX = require('xlsx');
 
 class TableExport extends LCAPApplicationService {
     async init() {
@@ -21,9 +22,24 @@ class TableExport extends LCAPApplicationService {
         this.on('Export', async (req) => {
 
             console.log("EXPORT ACTION ENTERED");
-            console.log(Products)
             const products = await this.get('SrvProjection');
-            return products;
+            console.log("PRODUCTS IN JSON FORMAT");
+            console.log(JSON.stringify(products));           
+            const worksheet = XLSX.utils.json_to_sheet(products);
+            // Create a new workbook and append the worksheet
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "SrvProjection");
+        
+            // Export the workbook to Excel file
+
+            const binaryString = XLSX.write(workbook, { bookType: 'xlsx', type: 'binary' });
+            const buffer = Buffer.from(binaryString, 'binary');
+
+            console.log("THIS A BUFFER");
+            console.log(buffer);
+            return buffer;
+         //   res.setHeader('Content-Disposition', 'attachment; filename=Products.xlsx');
+          //  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             
             /*const csvHeaders = 'ID;Category;Priority;Department;ProductName;DeliveryDate;Cost\n';
             const csvRows = await products.map(p => `${p.ID};${p.Category};${p.Priority};${p.Department};${p.ProductName};${p.DeliveryDate};${p.Cost}`).join('\n')
